@@ -1,0 +1,341 @@
+/* ContactForm.css */
+.contact-section {
+    padding: 80px 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Animated background particles */
+  .contact-section::before {
+    content: '☕';
+    position: absolute;
+    font-size: 24px;
+    opacity: 0.1;
+    animation: floating-coffee 15s linear infinite;
+    z-index: 1;
+  }
+  
+  .contact-section::after {
+    content: '☕';
+    position: absolute;
+    font-size: 18px;
+    opacity: 0.1;
+    animation: floating-coffee-reverse 20s linear infinite;
+    z-index: 1;
+  }
+  
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    perspective: 1000px;
+  }
+  
+  .contact-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    animation: card-entrance 1s ease-out;
+  }
+  
+  .contact-header {
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(to bottom, #ffffff, #fff8f0);
+    border-bottom: 1px solid #ffe4cc;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Shimmering effect for header */
+  .contact-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    transform: rotate(45deg);
+    animation: shimmer 6s linear infinite;
+  }
+  
+  .coffee-icon {
+    font-size: 64px;
+    margin-bottom: 24px;
+    position: relative;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  /* Steam animation for coffee icon */
+  .coffee-icon::before,
+  .coffee-icon::after {
+    content: '~';
+    position: absolute;
+    font-size: 24px;
+    color: #6b4f43;
+    opacity: 0;
+  }
+  
+  .coffee-icon::before {
+    top: -20px;
+    left: 10px;
+    animation: steam 2s ease-out infinite;
+  }
+  
+  .coffee-icon::after {
+    top: -20px;
+    left: 30px;
+    animation: steam 2s ease-out infinite 1s;
+  }
+  
+  .contact-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #4a3228;
+    margin-bottom: 24px;
+    line-height: 1.2;
+    transform: translateZ(20px);
+    transition: transform 0.3s ease;
+  }
+  
+  .contact-title:hover {
+    transform: translateZ(40px);
+  }
+  
+  .contact-description {
+    font-size: 20px;
+    color: #6b4f43;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fade-in 0.8s ease-out forwards 0.5s;
+  }
+  
+  .form-container {
+    position: relative;
+    padding: 40px;
+    background-color: #fff8f0;
+    transform: translateZ(10px);
+  }
+  
+  .contact-iframe {
+    width: 100%;
+    height: 1000px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .contact-iframe:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #ffe4cc;
+    border-top: 4px solid #c17f59;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Animations */
+  @keyframes card-entrance {
+    from {
+      opacity: 0;
+      transform: translateY(100px) rotateX(-10deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+  
+  @keyframes steam {
+    0% { opacity: 0; transform: translateY(0) scale(1); }
+    50% { opacity: 0.5; transform: translateY(-10px) scale(1.1); }
+    100% { opacity: 0; transform: translateY(-20px) scale(1.2); }
+  }
+  
+  @keyframes shimmer {
+    0% { transform: translate(-50%, -50%) rotate(45deg); }
+    100% { transform: translate(50%, 50%) rotate(45deg); }
+  }
+  
+  @keyframes floating-coffee {
+    0% { transform: translate(-100%, -100%) rotate(0); }
+    100% { transform: translate(200%, 200%) rotate(360deg); }
+  }
+  
+  @keyframes floating-coffee-reverse {
+    0% { transform: translate(200%, -100%) rotate(0); }
+    100% { transform: translate(-100%, 200%) rotate(-360deg); }
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Hover effects */
+  .contact-card:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+  }
+  
+  /* Mouse parallax effect */
+  @media (hover: hover) {
+    .contact-card {
+      transition: transform 0.1s ease;
+    }
+    
+    .contact-card:hover {
+      transform: rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .contact-header {
+      padding: 40px 20px;
+    }
+  
+    .contact-title {
+      font-size: 36px;
+    }
+  
+    .contact-description {
+      font-size: 18px;
+    }
+  
+    .form-container {
+      padding: 20px;
+    }
+  
+    .contact-iframe {
+      height: 800px;
+    }
+  }
+  
+  /* Selection styling */
+  ::selection {
+    background: #ffe4cc;
+    color: #4a3228;
+  }
+  
+  /* Base styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  .contact-card {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+    transition: transform 0.2s ease-out; /* Smooth transition for 3D effect */
+    will-change: transform; /* Optimize for performance */
+  }
+  
+  .contact-card:hover {
+    transition: transform 0.1s ease-in-out; /* Slightly faster transitions on hover */
+  }
+  
+  .contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Centering the card */
+  }
+  
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+  }
+  
+  .loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #000;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .contact-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  .form-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    max-width: 600px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+  
