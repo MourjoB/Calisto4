@@ -6,6 +6,7 @@ import AboutSection from "../Components/AboutSection";
 import ContactSection from "../Components/ContactSection";
 import Footer from "../Components/Footer";
 import '../styles.css';
+import './globals.css';
 import QuoteCalculator from '../Components/Calculator';  // Updated import
 
 export default function Home() {

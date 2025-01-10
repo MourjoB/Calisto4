@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { Coffee, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import '../app/globals.css'
+
 
 // Constants
 const PARTICLE_COUNT = 50;

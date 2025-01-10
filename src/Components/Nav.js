@@ -4,6 +4,7 @@ import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Menu, X, Phone, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { useThrottle } from '@/hooks/usethrottle';
+import '../app/globals.css'
 
 // Constants
 const NAV_ITEMS = [

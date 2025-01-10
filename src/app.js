@@ -8,6 +8,8 @@ import Footer from "./Components/Footer";
 import './styles.css';
 import './Components/Calculator'
 import { Calculator } from "lucide-react";
+import './app/globals.css';
+
 
 
 
