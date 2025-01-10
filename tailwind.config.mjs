@@ -11,9 +11,11 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        coffeeBrown: '#D2B48C',
       },
     },
   },
   plugins: [],
   
 };
+

@@ -526,48 +526,6 @@ body {
     letter-spacing: -0.025em;
 }
 
-/* Navigation Styles */
-nav {
-    background-color: var(--bg-color);
-    color: var(--secondary-color);
-    padding: 15px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-    color: var(--secondary-color);
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.contact-btn {
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-/* Hero Section */
-header {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-}
-
-.hero-text h1 {
-    color: var(--secondary-color);
-}
-
-.get-started-btn {
-    background-color: var(--accent-color);
-    color: white;
-    padding: 15px 30px;
-    border-radius: 25px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
 /* Product Details Section */
 .product-details {
     background-color: var(--bg-color);
@@ -905,3 +863,15 @@ h1, h2, h3 {
     ring-color: #4f46e5;
 }
 
+@keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
