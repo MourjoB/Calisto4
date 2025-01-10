@@ -32,35 +32,6 @@ body {
 }
 
 
-/* Hero Section */
-header {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-}
-
-.hero-content {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-}
-
-.hero-text h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-.get-started-btn {
-    display: inline-flex;
-    align-items: center;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    padding: 15px 30px;
-    border-radius: 25px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
 
 /* About Section */
 /* AboutSection.css */

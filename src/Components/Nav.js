@@ -1,5 +1,5 @@
 "use client";
-import './nav.css';
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, ChevronUp } from 'lucide-react';
 
@@ -12,11 +12,9 @@ const Nav = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (window.scrollY / scrollHeight) * 100;
       setScrollProgress(progress);
-
       setShowScrollTop(window.scrollY > 400);
     };
 
@@ -38,61 +36,50 @@ const Nav = () => {
 
   return (
     <>
-      <nav 
-        className={`fixed w-full z-50 transition-all duration-500 shadow-lg ${
-          isScrolled ? 'bg-white/90 backdrop-blur-md py-0.1 border-b border-gray-200' : 'bg-transparent py-4'
-        } ${isMenuOpen ? 'bg-white' : ''}`}
+      <nav className={`fixed w-full z-50 transition-all duration-500 shadow-lg h-20 flex items-center justify-between px-4 box-border font-poppins
+        ${isScrolled ? 'bg-white/90 backdrop-blur-md py-0.5 border-b border-gray-200' : 'bg-transparent py-4'}
+        ${isMenuOpen ? 'bg-white' : ''}`}
       >
-        <div 
-          className="scroll-progress-bar"
+        <div className="absolute top-0 left-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-500 transition-all duration-100"
           style={{ width: `${scrollProgress}%` }}
         />
+        
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
+            <div className="flex items-center pb-5">
               <img 
                 src="/images/Calisto.png" 
                 alt="Calisto Logo" 
-                className="logo-image cursor-pointer transition-all duration-300 hover:scale-110"
+                className="h-[70px] w-auto cursor-pointer transition-all duration-300 hover:scale-110 -mb-8 md:h-[40px]"
                 onClick={() => scrollToSection('hero')}
               />
             </div>
 
             <div className="hidden md:flex items-center gap-8">
-              <div className="nav-links flex gap-6">
-                <button 
-                  onClick={() => scrollToSection('products')}
-                  className="nav-link font-display text-base text-gray-700 hover:text-blue-600 transition-colors duration-300 relative group"
-                >
-                  Products
-                  <span className="absolute bottom-0 left-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </button>
-                <button 
-                  onClick={() => scrollToSection('calculator')}
-                  className="nav-link font-display text-base text-gray-700 hover:text-blue-600 transition-colors duration-300 relative group"
-                >
-                  Quote Calculator
-                  <span className="absolute bottom-0 left-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </button>
-                <button 
-                  onClick={() => scrollToSection('about')}
-                  className="nav-link font-display text-base text-gray-700 hover:text-blue-600 transition-colors duration-300 relative group"
-                >
-                  About
-                  <span className="absolute bottom-0 left-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </button>
+              <div className="flex gap-8">
+                {['products', 'calculator', 'about'].map((section) => (
+                  <button 
+                    key={section}
+                    onClick={() => scrollToSection(section)}
+                    className="relative text-base font-semibold text-gray-700 hover:text-blue-600 transition-colors duration-300 font-roboto hover:-translate-y-0.5 group"
+                  >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                ))}
               </div>
+              
               <button 
                 onClick={() => scrollToSection('contact')}
-                className="contact-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-5 py-2.5 rounded-full hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 font-semibold flex items-center gap-2 shadow-md hover:shadow-lg"
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full font-bold text-base hover:scale-105 transition-all duration-300"
               >
-                <Phone size={16} className="icon" />
+                <Phone size={16} className="transition-transform duration-300 group-hover:rotate-12" />
                 <span>Contact Us</span>
               </button>
             </div>
 
             <button 
-              className="menu-btn md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             >
@@ -100,22 +87,26 @@ const Nav = () => {
             </button>
           </div>
 
-          <div 
-            className={`mobile-menu md:hidden transition-all duration-300 ease-in-out ${
-              isMenuOpen ? 'open' : ''
-            }`}
+          <div className={`md:hidden flex flex-col gap-4 bg-white/90 p-4 rounded-lg transition-all duration-300 
+            ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}
           >
-            <button onClick={() => scrollToSection('products')} className="mobile-nav-link">Products</button>
-            <button onClick={() => scrollToSection('calculator')} className="mobile-nav-link">Quote Calculator</button>
-            <button onClick={() => scrollToSection('about')} className="mobile-nav-link">About</button>
-            <button onClick={() => scrollToSection('contact')} className="mobile-nav-link">Contact Us</button>
+            {['products', 'calculator', 'about', 'contact'].map((section) => (
+              <button
+                key={section}
+                onClick={() => scrollToSection(section)}
+                className="text-base text-gray-700 py-2 px-4 rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-300"
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </button>
+            ))}
           </div>
         </div>
       </nav>
 
       <button 
         onClick={scrollToTop}
-        className={`scroll-to-top ${showScrollTop ? 'show' : ''}`}
+        className={`fixed bottom-8 right-8 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 hover:shadow-xl transition-all duration-300 z-50
+          ${showScrollTop ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-5'}`}
       >
         <ChevronUp size={24} />
       </button>
