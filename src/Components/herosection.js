@@ -1,138 +1,134 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, memo } from 'react';
-import { Coffee, ArrowRight } from 'lucide-react';
-import Image from 'next/image';
-import '../app/globals.css'
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, Coffee } from 'lucide-react';
+import { motion } from 'framer-motion';
 
+const CONTENT = {
+  tagline: "Direct from Kushal Nagar Plantations",
+  title: "Premium Wholesale Coffee",
+  subtitle: "Best Price in the Market",
+  description: "Are you a Cafe Owner or a Coffee Wholesaler? Maybe you are into Coffee Trading or own a Restaurant. If \"Yes\", We can Guarantee Premium Grade Coffee at the Best Price in the Market."
+};
 
-// Constants
-const PARTICLE_COUNT = 50;
-const HERO_TAGLINE = "Direct from Kushal Nagar Plantations";
-const HERO_TITLE = "Premium Wholesale Coffee";
-const HERO_SUBTITLE = "Best Price in the Market";
-const HERO_DESCRIPTION = "Are you a Cafe Owner or a Coffee Wholesaler? Maybe you are into Coffee Trading or own a Restaurant. If \"Yes\", We can Guarantee Premium Grade Coffee at the Best Price in the Market.";
-
-// Memoized Particle component for better performance
-const Particle = memo(({ width, height, left, top, delay }) => (
-  <div
-    className="absolute bg-white/10 rounded-full animate-float"
-    style={{
-      width: `${width}px`,
-      height: `${height}px`,
-      left: `${left}%`,
-      top: `${top}%`,
-      animationDelay: `${delay}s`,
-    }}
-  />
-));
-
-Particle.displayName = 'Particle';
-
-// Memoized button component
-const ActionButton = memo(({ variant = 'primary', onClick, children }) => {
-  const baseStyles = "flex items-center px-6 py-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2";
-  const variants = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
-    secondary: "border border-white/20 text-white hover:bg-white/10 focus:ring-white/50"
-  };
+const Button = ({ children, secondary = false, onClick }) => {
+  const baseStyles = "flex items-center justify-center px-6 py-3 rounded-full transition-all duration-300 font-medium tracking-wide";
+  const styleVariant = secondary 
+    ? "border border-white/20 text-white hover:bg-white/10" 
+    : "bg-[#8B4513] hover:bg-[#654321] text-white shadow-lg hover:shadow-xl";
 
   return (
     <button 
       onClick={onClick}
-      className={`${baseStyles} ${variants[variant]}`}
+      className={`${baseStyles} ${styleVariant}`}
     >
       {children}
     </button>
   );
-});
+};
 
-ActionButton.displayName = 'ActionButton';
+const Particles = () => {
+  const [mounted, setMounted] = useState(false);
 
-// Main Hero Component
-const HeroSection = () => {
-  const [particles, setParticles] = useState([]);
-
-  // Generate particles with memoized calculation
   useEffect(() => {
-    const newParticles = Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
-      id: i,
-      width: 3 + Math.random() * 7, // Constrained size for better performance
-      height: 3 + Math.random() * 7,
-      left: Math.random() * 100,
-      top: Math.random() * 100,
-      delay: Math.random() * 2
-    }));
-    setParticles(newParticles);
+    setMounted(true);
   }, []);
 
-  // Memoized scroll handler
-  const scrollToContact = useCallback(() => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
+  if (!mounted) return null;
 
   return (
-    <main className="relative min-h-screen bg-slate-900 text-gray-200 font-inter leading-relaxed overflow-hidden">
-      {/* Background Image with Next.js Image component for better optimization */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/HeroPic.webp"
-          alt="Hero Background"
-          fill
-          priority
-          quality={90}
-          className="object-cover"
-          sizes="100vw"
-        />
-      </div>
+    <div className="absolute inset-0 overflow-hidden">
+      {[...Array(20)].map((_, i) => {
+        const left = `${(i * 5) % 100}%`;
+        const top = `${(i * 7) % 100}%`;
+        const duration = 2 + (i % 3);
+        const delay = (i * 0.1) % 2;
 
-      {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/30 z-[1]" />
+        return (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-[#D2B48C]/10 rounded-full"
+            animate={{
+              y: ["0%", "100%"],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration,
+              repeat: Infinity,
+              ease: "linear",
+              delay,
+            }}
+            style={{ left, top }}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
-      {/* Particles Container */}
-      <div className="absolute inset-0 overflow-hidden opacity-20 z-[2]">
-        {particles.map((particle) => (
-          <Particle key={particle.id} {...particle} />
-        ))}
-      </div>
+const HeroSection = () => {
+  const handleGetQuote = () => {
+    const contactSection = document.getElementById('contact');
+    contactSection?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-      {/* Content Container */}
-      <div className="relative z-[3] min-h-screen flex items-center justify-center px-4 py-16">
-        <div className="max-w-4xl text-center">
-          {/* Tag Line */}
-          <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 text-sm text-white">
-            <Coffee className="mr-2 text-blue-400" size={20} />
-            {HERO_TAGLINE}
-          </div>
+  return (
+    <section className="relative min-h-screen bg-slate-900 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-[url('/images/HeroPic.webp')] bg-cover bg-center" />
+      <div className="absolute inset-0 bg-black/50" />
 
-          {/* Main Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 text-white leading-tight">
-            {HERO_TITLE}
-            <br />
-            <span style={{ color: '#D2B48C' }}>{HERO_SUBTITLE}</span>
-          </h1>
+      <Particles />
 
-          {/* Description */}
-          <p className="text-lg sm:text-xl text-white mb-10 max-w-2xl mx-auto">
-            {HERO_DESCRIPTION}
-          </p>
+      {/* Content */}
+      <div className="relative min-h-screen flex items-center justify-center">
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center bg-[#8B4513]/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6"
+          >
+            <Coffee className="mr-2 text-[#D2B48C]" size={20} />
+            <span className="text-sm text-white font-medium tracking-wide">{CONTENT.tagline}</span>
+          </motion.div>
 
-          {/* Call to Action Buttons */}
-          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:space-x-4">
-            <ActionButton variant="primary" onClick={scrollToContact}>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-tight"
+          >
+            <span className="text-blue-500">{CONTENT.title}</span>
+            <span className="block text-blue-400">{CONTENT.subtitle}</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-lg text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed font-light"
+          >
+            {CONTENT.description}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="flex flex-col sm:flex-row justify-center gap-4"
+          >
+            <Button onClick={handleGetQuote}>
               Get Custom Quote
-              <ArrowRight className="ml-2" size={20} />
-            </ActionButton>
-            <ActionButton variant="secondary" onClick={scrollToContact}>
+              <ArrowRight className="ml-2" size={16} />
+            </Button>
+            <Button secondary onClick={handleGetQuote}>
               Learn More
-            </ActionButton>
-          </div>
+            </Button>
+          </motion.div>
         </div>
       </div>
-    </main>
+    </section>
   );
 };
 
